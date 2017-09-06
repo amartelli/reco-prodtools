@@ -218,7 +218,7 @@ process.RandomNumberGeneratorService.mix.initialSeed = cms.untracked.uint32(PUSE
 process.mix.input.nbPileupEvents.averageNumber = cms.double(PUVALUE)
 process.mix.input.fileNames = cms.untracked.vstring(PUFILES)
 process.mix.bunchspace = cms.int32(25)
-process.mix.minBunch = cms.int32(-12)
+process.mix.minBunch = cms.int32(-3)
 process.mix.maxBunch = cms.int32(3)
         """
         PUSECTION=PUSECTION.replace('PUVALUE',opt.PU)
@@ -401,7 +401,8 @@ process.mix.maxBunch = cms.int32(3)
             write_template.close()
 
 
-            cmd = 'bsub -o '+outDir+'/std/'+basename +'.out -e '+outDir+'/std/'+basename +'.err -q '+opt.QUEUE+' -J '+basename+' "SubmitFileGSD.sh '+currentDir+' '+outDir+' '+cfgfile+' '+str(opt.LOCAL)+' '+CMSSW_VERSION+' '+CMSSW_BASE+' '+SCRAM_ARCH+' '+opt.eosArea+' '+opt.DTIER+'"'
+            #cmd = 'bsub -o '+outDir+'/std/'+basename +'.out -e '+outDir+'/std/'+basename +'.err -q '+opt.QUEUE+' -J '+basename+' "SubmitFileGSD.sh '+currentDir+' '+outDir+' '+cfgfile+' '+str(opt.LOCAL)+' '+CMSSW_VERSION+' '+CMSSW_BASE+' '+SCRAM_ARCH+' '+opt.eosArea+' '+opt.DTIER+'"'
+            cmd = 'bsub -q '+opt.QUEUE+' -J '+basename+' "SubmitFileGSD.sh '+currentDir+' '+outDir+' '+cfgfile+' '+str(opt.LOCAL)+' '+CMSSW_VERSION+' '+CMSSW_BASE+' '+SCRAM_ARCH+' '+opt.eosArea+' '+opt.DTIER+'"'
 
             #TODO This could probably be better handled by a job array
             #Example: bsub -J "foo[1-3]" -oo "foo.%I.out" -eo "foo.%I.err" -q 8nm "sleep 1"

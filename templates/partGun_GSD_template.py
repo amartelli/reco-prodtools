@@ -8,6 +8,19 @@ import FWCore.ParameterSet.Config as cms
 from Configuration.StandardSequences.Eras import eras
 
 process = cms.Process('HLT',eras.Phase2)
+from SimCalorimetry.HGCalSimProducers.hgcalDigitizer_cfi import hgchefrontDigitizer
+hgchefrontDigitizer.tofDelay = cms.double(3.)
+hgchefrontDigitizer.digiCfg.feCfg.jitterNoise_ns = cms.vdouble(5., 5., 5.)
+hgchefrontDigitizer.digiCfg.feCfg.jitterConstant_ns = cms.vdouble(0.02, 0.02, 0.02)
+hgchefrontDigitizer.digiCfg.feCfg.tdcForToaOnset_fC = cms.vdouble(3.75, 7.71, 11.64)
+
+from SimCalorimetry.HGCalSimProducers.hgcalDigitizer_cfi import hgceeDigitizer
+hgceeDigitizer.tofDelay = cms.double(3.)
+hgceeDigitizer.digiCfg.feCfg.jitterNoise_ns = cms.vdouble(5., 5., 5.)
+hgceeDigitizer.digiCfg.feCfg.jitterConstant_ns = cms.vdouble(0.02, 0.02, 0.02)
+hgceeDigitizer.digiCfg.feCfg.tdcForToaOnset_fC = cms.vdouble(3.75, 7.71, 11.64)
+#cms.vdouble(1.25,2.57,3.88)
+
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
