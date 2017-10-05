@@ -7,7 +7,15 @@ import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
 
-process = cms.Process('RECO',eras.Phase2C2)
+process = cms.Process('RECO',eras.Phase2)
+from SimCalorimetry.HGCalSimProducers.hgcalDigitizer_cfi import hgchefrontDigitizer
+hgchefrontDigitizer.digiCfg.feCfg.toaLSB_ns = cms.double(0.0244)
+
+from SimCalorimetry.HGCalSimProducers.hgcalDigitizer_cfi import hgceeDigitizer
+hgceeDigitizer.digiCfg.feCfg.toaLSB_ns = cms.double(0.0244)
+#cms.vdouble(1.25,2.57,3.88)
+
+
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')

@@ -7,7 +7,24 @@ import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
 
-process = cms.Process('HLT',eras.Phase2C2)
+process = cms.Process('HLT',eras.Phase2)
+from SimCalorimetry.HGCalSimProducers.hgcalDigitizer_cfi import hgchefrontDigitizer
+hgchefrontDigitizer.tofDelay = cms.double(3.)
+hgchefrontDigitizer.digiCfg.feCfg.jitterNoise_ns = cms.vdouble(5., 5., 5.)
+hgchefrontDigitizer.digiCfg.feCfg.jitterConstant_ns = cms.vdouble(0.02, 0.02, 0.02)
+hgchefrontDigitizer.digiCfg.feCfg.tdcForToAOnset_fC = cms.vdouble(3.75, 7.71, 11.64)
+#hgchefrontDigitizer.digiCfg.feCfg.tdcForToAOnset_fC = cms.vdouble(12, 12, 12)
+hgchefrontDigitizer.digiCfg.feCfg.toaLSB_ns = cms.double(0.0244)
+
+from SimCalorimetry.HGCalSimProducers.hgcalDigitizer_cfi import hgceeDigitizer
+hgceeDigitizer.tofDelay = cms.double(3.)
+hgceeDigitizer.digiCfg.feCfg.jitterNoise_ns = cms.vdouble(5., 5., 5.)
+hgceeDigitizer.digiCfg.feCfg.jitterConstant_ns = cms.vdouble(0.02, 0.02, 0.02)
+hgceeDigitizer.digiCfg.feCfg.tdcForToAOnset_fC = cms.vdouble(3.75, 7.71, 11.64)
+#hgceeDigitizer.digiCfg.feCfg.tdcForToAOnset_fC = cms.vdouble(12, 12, 12)
+hgceeDigitizer.digiCfg.feCfg.toaLSB_ns = cms.double(0.0244)
+#cms.vdouble(1.25,2.57,3.88)
+
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -84,10 +101,10 @@ if gunmode == 'default':
     process.generator = cms.EDProducer("GUNPRODUCERTYPE",
         AddAntiParticle = cms.bool(True),
         PGunParameters = cms.PSet(
-            MaxEta = cms.double(3.0),
+            MaxEta = cms.double(DUMMYETAMAX),
             MaxPhi = cms.double(3.14159265359),
             MAXTHRESHSTRING = cms.double(DUMMYTHRESHMAX),
-            MinEta = cms.double(1.479),
+            MinEta = cms.double(DUMMYETAMIN),
             MinPhi = cms.double(-3.14159265359),
             MINTHRESHSTRING = cms.double(DUMMYTHRESHMIN),
             #DUMMYINCONESECTION
